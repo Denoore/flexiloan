@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlexiLoan | Modern Lending Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 font-sans text-gray-800 flex flex-col min-h-screen">
+
+    <div id="auth-alert" class="hidden bg-amber-500 text-white text-center py-2 px-4 font-medium transition-all">
+        <i class="fa-solid fa-lock mr-2"></i> Access Restricted. Please create an account or log in first.
+    </div>
+
+    <nav class="bg-indigo-900 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center cursor-pointer" onclick="showPage('home')">
+                    <i class="fa-solid fa-hand-holding-dollar text-2xl text-emerald-400 mr-2"></i>
+                    <span class="font-bold text-xl tracking-tight">FlexiLoan</span>
+                </div>
+                <div class="hidden md:flex space-x-4">
+                    <button onclick="showPage('home')" class="hover:bg-indigo-800 px-3 py-2 rounded-md text-sm font-medium">Home</button>
+                    <button onclick="showProtectedPage('lend')" class="hover:bg-indigo-800 px-3 py-2 rounded-md text-sm font-medium">Apply for Loan</button>
+                    <button onclick="showProtectedPage('pay')" class="hover:bg-indigo-800 px-3 py-2 rounded-md text-sm font-medium">Pay Balance</button>
+                </div>
+                <div class="flex space-x-2" id="auth-buttons">
+                    <button onclick="showPage('login')" class="bg-transparent hover:bg-indigo-800 text-white px-4 py-2 rounded-md text-sm font-medium border border-white">Log In</button>
+                    <button onclick="showPage('register')" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-md text-sm font-medium">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <section id="home" class="page active space-y-12">
+            <div class="text-center py-12 bg-white rounded-2xl shadow-sm border border-gray-100 px-4">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-900 tracking-tight">
+                    Simple, Fast, and Reliable Loans.
+                </h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                    Get approved in minutes with competitive rates and flexible repayment plans tailored just for you.
+                </p>
+                <div class="mt-8 flex justify-center space-x-4">
+                    <button onclick="showProtectedPage('lend')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-lg shadow">
+                        Get Started Today
+                    </button>
+                    <button onclick="showProtectedPage('pay')" class="bg-white hover:bg-gray-50 text-indigo-600 font-semibold px-6 py-3 rounded-lg border border-gray-300">
+                        Manage My Loan
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-xl">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-indigo-900 mb-2">Instant Approval</h3>
+                    <p class="text-gray-600 text-sm">Our automated system reviews your application and provides feedback within seconds.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-xl">
+                        <i class="fa-solid fa-percent"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-indigo-900 mb-2">Low Interest Rates</h3>
+                    <p class="text-gray-600 text-sm">We offer some of the most competitive rates in the market, starting at just 4.5% APR.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 text-xl">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-indigo-900 mb-2">Safe & Secure</h3>
+                    <p class="text-gray-600 text-sm">Your data is fully encrypted and protected with bank-grade security protocols.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="register" class="page max-w-md mx-auto bg-white p-8 rounded-2xl shadow-md border border-gray-100">
+            <h2 class="text-2xl font-bold text-indigo-900 text-center mb-6">Create Your Account</h2>
+            <form onsubmit="handleAuth(event, 'Registered successfully! Account Activated.')" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" required id="terms" class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                    <label for="terms" class="ml-2 block text-sm text-gray-600">I agree to the Terms of Service</label>
+                </div>
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 rounded-md shadow transition">
+                    Sign Up
+                </button>
+            </form>
+            <p class="mt-4 text-center text-sm text-gray-600">
+                Already have an account? <button onclick="showPage('login')" class="text-indigo-600 font-medium hover:underline">Log In</button>
+            </p>
+        </section>
+
+        <section id="login" class="page max-w-md mx-auto bg-white p-8 rounded-2xl shadow-md border border-gray-100">
+            <h2 class="text-2xl font-bold text-indigo-900 text-center mb-6">Welcome Back</h2>
+            <form onsubmit="handleAuth(event, 'Logged in successfully!')" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-md shadow transition">
+                    Log In
+                </button>
+            </form>
+            <p class="mt-4 text-center text-sm text-gray-600">
+                Don't have an account? <button onclick="showPage('register')" class="text-indigo-600 font-medium hover:underline">Sign Up</button>
+            </p>
+        </section>
+
+        <section id="lend" class="page max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-md border border-gray-100">
+            <h2 class="text-2xl font-bold text-indigo-900 mb-2">Apply for a New Loan</h2>
+            <p class="text-gray-600 mb-6 text-sm">Customize and apply for your funding down below.</p>
+            
+            <form onsubmit="handleLoanSubmission(event)" class="space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Desired Amount (₱)</label>
+                        <input type="number" id="loanAmount" min="500" max="50000" step="500" value="5000" oninput="calculateLoan()" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Repayment Term</label>
+                        <select id="loanTerm" onchange="calculateLoan()" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <option value="6">6 Months (5.0% Interest)</option>
+                            <option value="12" selected>12 Months (5.5% Interest)</option>
+                            <option value="24">24 Months (6.0% Interest)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 grid grid-cols-2 gap-4 text-center">
+                    <div>
+                        <p class="text-xs text-indigo-700 font-semibold uppercase">Est. Monthly Payment</p>
+                        <p class="text-xl font-bold text-indigo-900 mt-1" id="monthlyEstimate">₱439.58</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-indigo-700 font-semibold uppercase">Total Repayment</p>
+                        <p class="text-xl font-bold text-indigo-900 mt-1" id="totalEstimate">₱5,275.00</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-md shadow transition">
+                    Submit Loan Application
+                </button>
+            </form>
+        </section>
+
+        <section id="pay" class="page max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-md border border-gray-100">
+            <h2 class="text-2xl font-bold text-indigo-900 mb-2">Your Outstanding Balance</h2>
+            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 flex justify-between items-center">
+                <div>
+                    <p class="text-xs font-bold text-amber-800 uppercase">Current Balance</p>
+                    <p class="text-2xl font-black text-amber-900 mt-1" id="currentBalanceDisplay">₱0.00</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs font-medium text-gray-500">Next Due Date</p>
+                    <p class="text-sm font-bold text-gray-800 mt-1">July 15, 2026</p>
+                </div>
+            </div>
+
+            <form onsubmit="handlePaymentSubmission(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Payment Amount (₱)</label>
+                    <input type="number" id="paymentAmountInput" required min="1" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-md shadow transition">
+                    Authorize Payment
+                </button>
+            </form>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-900 text-gray-400 py-6 mt-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm">
+            <p>&copy; 2026 FlexiLoan Lending Services Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // track client session state & active loan balances
+        let isLoggedIn = false;
+        let activeLoanBalance = 0.00; // track dynamic balance updates explicitly
+
+        // balance update
+        function updateBalanceUI() {
+            document.getElementById('currentBalanceDisplay').innerText = `₱${activeLoanBalance.toFixed(2)}`;
+            document.getElementById('paymentAmountInput').max = activeLoanBalance.toFixed(2);
+        }
+
+        function showPage(pageId) {
+            document.getElementById('auth-alert').classList.add('hidden');
+            
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) targetPage.classList.add('active');
+            
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function showProtectedPage(pageId) {
+            if (!isLoggedIn) {
+                document.getElementById('auth-alert').classList.remove('hidden');
+                showPage('login');
+            } else {
+                showPage(pageId);
+            }
+        }
+
+        function handleAuth(event, successMessage) {
+            event.preventDefault();
+            isLoggedIn = true;
+            alert(successMessage);
+            
+            document.getElementById('auth-buttons').innerHTML = `
+                <span class="text-emerald-400 font-medium self-center mr-2"><i class="fa-solid fa-circle-user"></i> Active Profile</span>
+                <button onclick="logoutClient()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium">Log Out</button>
+            `;
+            
+            updateBalanceUI();
+            showPage('home');
+            event.target.reset();
+        }
+
+        function logoutClient() {
+            isLoggedIn = false;
+            activeLoanBalance = 0;
+            alert("Logged out successfully.");
+            location.reload();
+        }
+
+        function calculateLoan() {
+            const amount = parseFloat(document.getElementById('loanAmount').value) || 0;
+            const months = parseInt(document.getElementById('loanTerm').value);
+            
+            let rate = 0.05; 
+            if(months === 12) rate = 0.055;
+            if(months === 24) rate = 0.06;
+
+            let total = amount * (1 + rate);
+            let monthly = total / months;
+
+            document.getElementById('monthlyEstimate').innerText = `₱${monthly.toFixed(2)}`;
+            document.getElementById('totalEstimate').innerText = `₱${total.toFixed(2)}`;
+        }
+
+        // add to balance when a user takes out a loan
+        function handleLoanSubmission(event) {
+            event.preventDefault();
+            
+            const amount = parseFloat(document.getElementById('loanAmount').value) || 0;
+            const months = parseInt(document.getElementById('loanTerm').value);
+            
+            let rate = 0.05; 
+            if(months === 12) rate = 0.055;
+            if(months === 24) rate = 0.06;
+
+            let calculatedTotalLoan = amount * (1 + rate);
+            
+            // add to client's outstanding total pool balance state dynamically
+            activeLoanBalance += calculatedTotalLoan;
+            updateBalanceUI();
+
+            alert(`Loan Approved! ₱${calculatedTotalLoan.toFixed(2)} has been added to your profile balance.`);
+            showPage('pay'); // go straight to balance module view area automatically
+            event.target.reset();
+        }
+
+        // deduct from balance when payment is sent
+        function handlePaymentSubmission(event) {
+            event.preventDefault();
+            const paymentInput = document.getElementById('paymentAmountInput');
+            const paymentAmount = parseFloat(paymentInput.value) || 0;
+
+            if (paymentAmount <= 0) {
+                alert("Please enter a valid payment amount.");
+                return;
+            }
+            if (paymentAmount > activeLoanBalance) {
+                alert("You cannot pay more than your active outstanding balance value!");
+                return;
+            }
+
+            // Deduct from tracking memory variables inside runtime state
+            activeLoanBalance -= paymentAmount;
+            updateBalanceUI();
+
+            alert(`Thank you! Your payment of ₱${paymentAmount.toFixed(2)} was successfully deducted from your outstanding balance.`);
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
